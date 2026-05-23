@@ -1,10 +1,521 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My Website</title>
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
-    <p>My website is coming soon.</p>
-  </body>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omsor — Dokumentationsinfrastruktur for PPR</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #042336;
+    --parchment: #EAE7D6;
+    --teal: #29707d;
+    --red: #c85a54;
+    --navy-light: #0a3d57;
+    --text-on-navy: #EAE7D6;
+    --text-muted: #5a7a8a;
+    --border: rgba(4,35,54,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 18px;
+    color: var(--navy);
+    background: #fff;
+    line-height: 1.65;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-size: 20px; font-weight: 600; letter-spacing: 0.08em;
+    color: var(--navy); text-decoration: none; text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 36px; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 15px; color: var(--navy); text-decoration: none;
+    opacity: 0.7; transition: opacity 0.2s;
+    font-family: 'EB Garamond', serif;
+  }
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-cta {
+    background: var(--navy); color: var(--parchment) !important;
+    opacity: 1 !important;
+    padding: 9px 22px;
+    font-size: 15px !important;
+    border: none; cursor: pointer;
+    font-family: 'EB Garamond', serif;
+    letter-spacing: 0.03em;
+    transition: background 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .nav-cta:hover { background: var(--navy-light) !important; }
+
+  /* SECTIONS */
+  section { padding: 100px 48px; }
+
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HERO */
+  #hero {
+    padding-top: 160px;
+    padding-bottom: 120px;
+    background: var(--navy);
+    color: var(--parchment);
+  }
+
+  .hero-eyebrow {
+    font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 28px;
+    font-family: 'EB Garamond', serif;
+  }
+
+  .hero-headline {
+    font-size: clamp(36px, 4.5vw, 58px);
+    font-weight: 500; line-height: 1.2;
+    color: var(--parchment);
+    max-width: 760px;
+    margin-bottom: 28px;
+  }
+
+  .hero-sub {
+    font-size: 19px; line-height: 1.7;
+    color: rgba(234,231,214,0.72);
+    max-width: 600px;
+    margin-bottom: 44px;
+  }
+
+  .hero-actions { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--parchment); color: var(--navy);
+    padding: 13px 30px; font-size: 16px;
+    font-family: 'EB Garamond', serif;
+    border: none; cursor: pointer; text-decoration: none;
+    display: inline-block; transition: background 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { background: #d4d0bc; }
+
+  .btn-ghost {
+    color: rgba(234,231,214,0.75); font-size: 16px;
+    text-decoration: none; font-family: 'EB Garamond', serif;
+    border-bottom: 1px solid rgba(234,231,214,0.3);
+    padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-ghost:hover { color: var(--parchment); border-color: var(--parchment); }
+
+  .hero-compliance {
+    margin-top: 60px; padding-top: 40px;
+    border-top: 1px solid rgba(234,231,214,0.15);
+    display: flex; gap: 40px; flex-wrap: wrap;
+  }
+
+  .compliance-tag {
+    font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(234,231,214,0.45);
+  }
+
+  /* INTRO BAR */
+  .intro-bar {
+    background: var(--parchment);
+    padding: 56px 48px;
+  }
+  .intro-bar .container {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .intro-bar h2 { font-size: 28px; font-weight: 500; line-height: 1.35; color: var(--navy); }
+  .intro-bar p { font-size: 17px; color: #3a5566; line-height: 1.7; }
+
+  /* SECTION TITLES */
+  .section-label {
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(26px, 3vw, 38px); font-weight: 500;
+    line-height: 1.25; color: var(--navy); margin-bottom: 20px;
+  }
+  .section-body {
+    font-size: 17px; color: #3a5566; line-height: 1.75; max-width: 560px;
+  }
+
+  /* PRODUCT */
+  #product { background: #fff; }
+
+  .product-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 60px;
+  }
+
+  .product-card {
+    background: #fff; padding: 40px 36px;
+  }
+
+  .product-num {
+    font-size: 12px; letter-spacing: 0.14em; color: var(--teal);
+    text-transform: uppercase; margin-bottom: 24px;
+  }
+
+  .product-card h3 { font-size: 22px; font-weight: 500; color: var(--navy); margin-bottom: 14px; }
+  .product-card p { font-size: 16px; color: #3a5566; line-height: 1.7; }
+
+  .product-detail {
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 14px; color: var(--text-muted);
+    letter-spacing: 0.01em;
+  }
+
+  /* CASES */
+  #cases { background: var(--parchment); }
+
+  .case-block {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: start; margin-top: 56px;
+  }
+
+  .case-meta { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
+  .case-quote { font-size: 22px; line-height: 1.5; font-style: italic; color: var(--navy); margin-bottom: 24px; }
+  .case-attribution { font-size: 14px; color: #3a5566; }
+
+  .case-stats { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .case-stat {
+    background: #fff; padding: 28px 32px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .stat-number { font-size: 36px; font-weight: 500; color: var(--navy); line-height: 1; }
+  .stat-label { font-size: 14px; color: #3a5566; }
+
+  /* COMPLIANCE */
+  #compliance { background: #fff; }
+
+  .compliance-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--border); border: 1px solid var(--border);
+    margin-top: 56px;
+  }
+
+  .compliance-item {
+    background: #fff; padding: 40px 36px;
+  }
+
+  .compliance-item h3 { font-size: 19px; font-weight: 500; margin-bottom: 12px; color: var(--navy); }
+  .compliance-item p { font-size: 16px; color: #3a5566; line-height: 1.7; }
+
+  .compliance-badge {
+    display: inline-block; margin-top: 16px;
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--teal); border: 1px solid var(--teal);
+    padding: 4px 12px;
+  }
+
+  /* ABOUT */
+  #about { background: var(--navy); color: var(--parchment); }
+  #about .section-label { color: var(--teal); }
+  #about .section-title { color: var(--parchment); }
+  #about .section-body { color: rgba(234,231,214,0.7); max-width: 640px; }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px;
+    margin-top: 60px; padding-top: 48px;
+    border-top: 1px solid rgba(234,231,214,0.12);
+  }
+
+  .about-item h4 { font-size: 16px; font-weight: 500; color: var(--parchment); margin-bottom: 10px; }
+  .about-item p { font-size: 15px; color: rgba(234,231,214,0.6); line-height: 1.65; }
+
+  /* DEMO CTA */
+  #demo {
+    background: var(--parchment);
+    text-align: center; padding: 100px 48px;
+  }
+
+  #demo .section-title { max-width: 600px; margin: 0 auto 20px; }
+  #demo .section-body { max-width: 480px; margin: 0 auto 40px; }
+
+  .demo-form {
+    display: flex; gap: 0; max-width: 480px; margin: 0 auto;
+    border: 1px solid rgba(4,35,54,0.25);
+  }
+
+  .demo-form input {
+    flex: 1; padding: 14px 18px; font-size: 16px;
+    font-family: 'EB Garamond', serif;
+    border: none; background: #fff; color: var(--navy);
+    outline: none;
+  }
+  .demo-form input::placeholder { color: rgba(4,35,54,0.35); }
+
+  .demo-form button {
+    background: var(--navy); color: var(--parchment);
+    padding: 14px 28px; border: none; cursor: pointer;
+    font-family: 'EB Garamond', serif; font-size: 16px;
+    transition: background 0.2s; white-space: nowrap;
+  }
+  .demo-form button:hover { background: var(--navy-light); }
+
+  .demo-note { margin-top: 16px; font-size: 14px; color: #3a5566; }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy); color: rgba(234,231,214,0.5);
+    padding: 60px 48px 40px;
+  }
+
+  .footer-inner {
+    max-width: 1080px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 40px; flex-wrap: wrap;
+  }
+
+  .footer-brand { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--parchment); font-weight: 600; margin-bottom: 10px; }
+  .footer-tagline { font-size: 14px; max-width: 240px; line-height: 1.6; }
+
+  .footer-nav { display: flex; gap: 60px; flex-wrap: wrap; }
+  .footer-col h5 { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(234,231,214,0.4); margin-bottom: 16px; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a { font-size: 15px; color: rgba(234,231,214,0.6); text-decoration: none; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--parchment); }
+
+  .footer-bottom {
+    max-width: 1080px; margin: 48px auto 0;
+    padding-top: 28px; border-top: 1px solid rgba(234,231,214,0.08);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; flex-wrap: wrap; gap: 12px;
+  }
+
+  /* NAV ACTIVE */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown > a { cursor: default; }
+
+  /* DIVIDER */
+  .rule { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 20px; }
+    section { padding: 72px 24px; }
+    .intro-bar { padding: 48px 24px; }
+    .intro-bar .container { grid-template-columns: 1fr; gap: 28px; }
+    .product-grid { grid-template-columns: 1fr; }
+    .case-block { grid-template-columns: 1fr; gap: 40px; }
+    .compliance-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr 1fr; }
+    footer { padding: 48px 24px 32px; }
+    #hero { padding-top: 120px; padding-left: 24px; padding-right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Omsor</a>
+  <ul class="nav-links">
+    <li><a href="#product">Produkt</a></li>
+    <li><a href="#cases">Cases</a></li>
+    <li><a href="#compliance">GDPR & Sikkerhed</a></li>
+    <li><a href="#about">Om os</a></li>
+    <li><a href="#demo" class="nav-cta">Book demo</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-eyebrow">Dokumentationsinfrastruktur for PPR</p>
+    <h1 class="hero-headline">Journaliseringssystem til psykologer i danske kommuner</h1>
+    <p class="hero-sub">Omsor er et GDPR-compliant dokumentations- og rapporteringsværktøj udviklet specifikt til PPR-psykologer — sikkert, struktureret og tilpasset den kommunale kontekst.</p>
+    <div class="hero-actions">
+      <a href="#demo" class="btn-primary">Book en demo</a>
+      <a href="#product" class="btn-ghost">Se produktet</a>
+    </div>
+    <div class="hero-compliance">
+      <span class="compliance-tag">GDPR-compliant</span>
+      <span class="compliance-tag">Dansk databehandling</span>
+      <span class="compliance-tag">Kommunal drift</span>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO BAR -->
+<div class="intro-bar">
+  <div class="container">
+    <h2>Bygget til PPR. Ikke til forbrugere.</h2>
+    <p>Omsor er designet til den specifikke arbejdsgang i Pædagogisk Psykologisk Rådgivning — med de krav til dokumentation, lovgivning og faglighed det indebærer. Ingen unødvendig funktionalitet. Kun det der understøtter arbejdet.</p>
+  </div>
+</div>
+
+<!-- PRODUCT -->
+<section id="product">
+  <div class="container">
+    <p class="section-label">Produkt</p>
+    <h2 class="section-title">Et komplet dokumentationsværktøj</h2>
+    <p class="section-body">Tre integrerede moduler danner tilsammen en sammenhængende infrastruktur for journaliseringen i PPR.</p>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <p class="product-num">01 — Journalisering</p>
+        <h3>Struktureret journalføring</h3>
+        <p>Én samlet journal pr. barn eller ung, med tydelig versionering, dokumentsporing og revisionssikker historik. Tilpasset PPR's faglige og juridiske krav.</p>
+        <div class="product-detail">Standardiserede skabeloner · Versionshistorik · Søgbar arkivering</div>
+      </div>
+      <div class="product-card">
+        <p class="product-num">02 — Rapportering</p>
+        <h3>Automatiseret afrapportering</h3>
+        <p>Generer ledelses- og statusrapporter direkte fra journaldata. Understøtter både intern opfølgning og ekstern dokumentation til kommunale forvaltninger.</p>
+        <div class="product-detail">Aggregerede oversigter · Eksport til PDF · Tilpassede rapporttyper</div>
+      </div>
+      <div class="product-card">
+        <p class="product-num">03 — AI-assistent</p>
+        <h3>Faglig dokumentationsstøtte</h3>
+        <p>En integreret tekstassistent der hjælper med at strukturere og formulere faglige notater — under fuld overholdelse af gældende databeskyttelseslovgivning.</p>
+        <div class="product-detail">Databehandling i EU · Ingen træning på journaldata · Auditlog</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases">
+  <div class="container">
+    <p class="section-label">Cases</p>
+    <h2 class="section-title">I brug i danske kommuner</h2>
+
+
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section id="compliance">
+  <div class="container">
+    <p class="section-label">GDPR & Sikkerhed</p>
+    <h2 class="section-title">Bygget på juridisk fundament</h2>
+    <p class="section-body">Omsor er konstrueret med databeskyttelse som udgangspunkt — ikke som eftermonteret funktion.</p>
+
+    <div class="compliance-grid">
+      <div class="compliance-item">
+        <h3>GDPR-compliance</h3>
+        <p>Fuld overholdelse af Databeskyttelsesforordningen (GDPR). Databehandleraftale medfølger ved alle installationer. Persondata behandles udelukkende inden for EU.</p>
+        <span class="compliance-badge">Art. 30 · DPA inkluderet</span>
+      </div>
+      <div class="compliance-item">
+        <h3>Kommunal databehandling</h3>
+        <p>Al databehandling sker i overensstemmelse med kommunernes it-sikkerhedspolitikker. Omsor kan integreres med eksisterende kommunale identity management-systemer.</p>
+        <span class="compliance-badge">SAML 2.0 · AD-integration</span>
+      </div>
+      <div class="compliance-item">
+        <h3>Adgangsstyring & audit</h3>
+        <p>Rollebaseret adgangsstyring sikrer at kun autoriserede medarbejdere har adgang til journaldata. Alle handlinger i systemet logges i et umanipulerbart auditspor.</p>
+        <span class="compliance-badge">RBAC · Auditlog</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">Om os</p>
+    <h2 class="section-title">Udviklet tæt på praksis</h2>
+    <p class="section-body">Omsor er opstået i dialog med PPR-psykologer og kommunale forvaltninger. Vi bygger dokumentationsinfrastruktur — ikke produkter der skal sælges til forbrugere.</p>
+
+    <div class="about-grid">
+      <div class="about-item">
+        <h4>Vores udgangspunkt</h4>
+        <p>Dokumentation i PPR er faglig, juridisk og menneskelig på én gang. Det kræver et system der respekterer kompleksiteten frem for at forenkle den.</p>
+      </div>
+      <div class="about-item">
+        <h4>Kommunal forankring</h4>
+        <p>Vi arbejder direkte med kommunale PPR-afdelinger for at sikre at Omsor matcher den faktiske arbejdsgang — ikke den idealiserede.</p>
+      </div>
+      <div class="about-item">
+        <h4>Langsigtet drift</h4>
+        <p>Omsor er bygget til at holde. Vi prioriterer driftsstabilitet, forudsigelighed og leverandøruafhængighed over hyppige produktopdateringer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo">
+  <div class="container">
+    <p class="section-label">Kom i gang</p>
+    <h2 class="section-title">Book en demonstration</h2>
+    <p class="section-body">Vi viser dig systemet i jeres kontekst. En demo tager 45 minutter og er uden forpligtelse.</p>
+
+    <div class="demo-form">
+      <input type="email" placeholder="Din arbejdsmail" />
+      <button type="button">Book demo →</button>
+    </div>
+    <p class="demo-note">Eller skriv til os på <strong>kontakt@omsor.dk</strong></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-brand">Omsor</p>
+      <p class="footer-tagline">Dokumentationsinfrastruktur for psykologer i danske kommuner.</p>
+    </div>
+    <div class="footer-nav">
+      <div class="footer-col">
+        <h5>Produkt</h5>
+        <ul>
+          <li><a href="#product">Journalisering</a></li>
+          <li><a href="#product">Rapportering</a></li>
+          <li><a href="#product">AI-assistent</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Ressourcer</h5>
+        <ul>
+          <li><a href="#">Nyheder</a></li>
+          <li><a href="#">Cases</a></li>
+          <li><a href="#compliance">GDPR & Sikkerhed</a></li>
+          <li><a href="#about">Om os</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Hjælp</h5>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Sådan bruger du Omsor</a></li>
+          <li><a href="#demo">Book demo</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Omsor ApS · CVR 12345678</span>
+    <span>Privatlivspolitik · Cookiepolitik · Databehandleraftale</span>
+  </div>
+</footer>
+</body>
 </html>
